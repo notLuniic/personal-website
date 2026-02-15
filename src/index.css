@@ -71,16 +71,16 @@ button:focus-visible {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: url('/cursor.png') 16 16, auto;
+  cursor: url('/cursor.png') 32 32, auto;
 }
 
 a, button, [role="button"] {
-  cursor: url('/cursor-pointer.png') 16 16, pointer;
+  cursor: url('/cursor-pointer.png') 32 32, pointer;
 }
 
 body.loading,
 body.loading * {
-  cursor: url('/cursor-loading.gif') 16 16, wait !important;
+  cursor: url('/cursor-loading.gif') 32 32, wait !important;
 }
 
 html, body, #root {
