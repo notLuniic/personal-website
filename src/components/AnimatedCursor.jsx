@@ -1,8 +1,15 @@
 import { useEffect, useState } from 'react';
 
-export function AnimatedCursor({ isLoading }) {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+export function AnimatedCursor({ isLoading, initialPosition }) {
+  const [position, setPosition] = useState(initialPosition);
   const [frame, setFrame] = useState(0);
+
+  useEffect(() => {
+    // Update position when initialPosition changes
+    if (initialPosition) {
+      setPosition(initialPosition);
+    }
+  }, [initialPosition]);
 
   useEffect(() => {
     if (!isLoading) return;
@@ -11,12 +18,10 @@ export function AnimatedCursor({ isLoading }) {
       setPosition({ x: e.clientX, y: e.clientY });
     };
 
-    // Animate through 18 frames (your sprite sheet has 18 frames)
     const interval = setInterval(() => {
       setFrame((prev) => (prev + 1) % 18);
-    }, 50); // Adjust speed here (lower = faster)
+    }, 50);
 
-    // Hide default cursor
     document.body.style.cursor = 'none';
     const style = document.createElement('style');
     style.innerHTML = `* { cursor: none !important; }`;
@@ -36,10 +41,8 @@ export function AnimatedCursor({ isLoading }) {
 
   if (!isLoading) return null;
 
-  // Calculate sprite position
-  // Sprite sheet is 5 columns, frames go left to right, top to bottom
   const cols = 5;
-  const frameWidth = 32; // Each frame appears to be ~32px
+  const frameWidth = 32;
   const frameHeight = 32;
   
   const col = frame % cols;
@@ -51,13 +54,13 @@ export function AnimatedCursor({ isLoading }) {
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,
-        transform: 'translate(-16px, -16px)', // Center the cursor (half of 32px)
+        transform: 'translate(0px, 0px)',
         width: `${frameWidth}px`,
         height: `${frameHeight}px`,
         backgroundImage: `url('/cursor-loading-spritesheet.png')`,
         backgroundPosition: `-${col * frameWidth}px -${row * frameHeight}px`,
         backgroundSize: `${cols * frameWidth}px auto`,
-        imageRendering: 'pixelated', // Keep it crisp/pixelated
+        imageRendering: 'pixelated',
       }}
     />
   );
