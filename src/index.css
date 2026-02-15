@@ -13,6 +13,30 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Custom cursor - applies to everything */
+*, *::before, *::after {
+  cursor: url('/cursor.png') 0 0, auto;
+}
+
+/* Specifically target interactive elements */
+button, a, input, select, textarea, [role="button"] {
+  cursor: url('/cursor-pointer.png') 0 0, pointer;
+}
+
+/* Hide cursor when loading (for AnimatedCursor component) - HIGHEST PRIORITY */
+.hide-cursor,
+.hide-cursor *,
+.hide-cursor button,
+.hide-cursor a {
+  cursor: none !important;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -43,7 +67,6 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
-  cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
@@ -67,22 +90,6 @@ button:focus-visible {
   }
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  cursor: url('/cursor.png') 0 0, auto;
-}
-
-a, button, [role="button"] {
-  cursor: url('/cursor-pointer.png') 0 0, pointer;
-}
-
-body.loading,
-body.loading * {
-  cursor: url('/cursor-loading.gif') 0 0, wait !important;
-}
-
 html, body, #root {
   margin: 0;
   padding: 0;
@@ -90,4 +97,3 @@ html, body, #root {
   height: 100%;
   min-height: 100vh;
 }
-
