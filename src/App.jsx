@@ -1,6 +1,6 @@
 import { useScrambleTitle } from './hooks/useScrambleTitle';
 import { AnimatedCursor } from './components/AnimatedCursor';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
   
@@ -15,6 +15,32 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
+  // Force cursor to load via JavaScript
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.id = 'custom-cursor-override';
+    style.innerHTML = `
+      *, *::before, *::after {
+        cursor: url('/cursor.png') 0 0, auto;
+      }
+      button, a, input, select, textarea, [role="button"] {
+        cursor: url('/cursor-pointer.png') 0 0, pointer;
+      }
+      .hide-cursor,
+      .hide-cursor *,
+      .hide-cursor button,
+      .hide-cursor a {
+        cursor: none !important;
+      }
+    `;
+    document.head.appendChild(style);
+
+    return () => {
+      const existingStyle = document.getElementById('custom-cursor-override');
+      if (existingStyle) existingStyle.remove();
+    };
+  }, []);
+
   const handleClick = async (e, buttonName) => {
     // Capture click position
     setCursorPosition({ x: e.clientX, y: e.clientY });
@@ -23,7 +49,6 @@ function App() {
     await new Promise(resolve => setTimeout(resolve, 2000));
     setIsLoading(false);
     
-    // Add your actual navigation/logic here based on buttonName
     console.log(`${buttonName} clicked`);
   };
 
