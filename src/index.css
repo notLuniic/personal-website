@@ -19,24 +19,6 @@
   box-sizing: border-box;
 }
 
-/* Custom cursor - applies to everything */
-*, *::before, *::after {
-  cursor: url('/cursor.png') 0 0, auto;
-}
-
-/* Specifically target interactive elements */
-button, a, input, select, textarea, [role="button"] {
-  cursor: url('/cursor-pointer.png') 0 0, pointer;
-}
-
-/* Hide cursor when loading (for AnimatedCursor component) - HIGHEST PRIORITY */
-.hide-cursor,
-.hide-cursor *,
-.hide-cursor button,
-.hide-cursor a {
-  cursor: none !important;
-}
-
 a {
   font-weight: 500;
   color: #646cff;
