@@ -53,35 +53,64 @@ function App() {
   };
 
   return (
-    <div 
-      className="bg-cover bg-center flex items-center justify-center"
-      style={{ 
-        backgroundImage: "url('/background.png')",
-        minHeight: '100vh',
-        width: '100vw'
-      }}
-    >
-      <AnimatedCursor isLoading={isLoading} initialPosition={cursorPosition} />
+    <div className="relative min-h-screen w-screen overflow-hidden">
+      {/* Custom Gradient Background - Fixed layer */}
+      <div 
+        className="fixed inset-0"
+        style={{ 
+          zIndex: -20,
+          backgroundColor: 'hsla(245,47%,35%,1)',
+          backgroundImage: `
+            radial-gradient(at 99% 1%, hsla(261,40%,37%,1) 0px, transparent 50%),
+            radial-gradient(at 54% 51%, hsla(269,60%,40%,1) 0px, transparent 50%),
+            radial-gradient(at 3% 100%, hsla(261,38%,44%,1) 0px, transparent 50%)
+          `
+        }}
+      />
+      
+      {/* Dog Image - Fixed to bottom left corner, 80% height */}
+      <div 
+        className="fixed left-0 bottom-0 w-full sm:w-2/3 md:w-1/2 lg:w-5/12 xl:w-1/3 opacity-40 sm:opacity-60 md:opacity-80 lg:opacity-100"
+        style={{ 
+          zIndex: -10,
+          height: '80vh'
+        }}
+      >
+        <img 
+          src="/Dog.png" 
+          alt="" 
+          className="h-full w-auto object-contain object-left-bottom"
+          style={{ 
+            imageRendering: 'crisp-edges',
+            filter: 'contrast(1.1) brightness(0.95)'
+          }}
+        />
+      </div>
 
-      <div className="flex flex-col gap-4">
-        <button
-          onClick={(e) => handleClick(e, 'Initialize')}
-          disabled={isLoading} 
-          className="px-12 py-4 bg-transparent text-green-400 border-2 border-green-400 font-mono uppercase tracking-wider hover:bg-green-400 hover:text-black transition-all hover:shadow-[0_0_20px_rgba(74,222,128,0.5)] disabled:opacity-50">
-          &gt; INITIALIZE
-        </button>
-        <button 
-          onClick={(e) => handleClick(e, 'Projects')}
-          disabled={isLoading}
-          className="px-12 py-4 bg-transparent text-green-400 border-2 border-green-400 font-mono uppercase tracking-wider hover:bg-green-400 hover:text-black transition-all hover:shadow-[0_0_20px_rgba(74,222,128,0.5)] disabled:opacity-50">
-          &gt; PROJECTS_
-        </button>
-        <button
-          onClick={(e) => handleClick(e, 'Contact')}
-          disabled={isLoading} 
-          className="px-12 py-4 bg-transparent text-green-400 border-2 border-green-400 font-mono uppercase tracking-wider hover:bg-green-400 hover:text-black transition-all hover:shadow-[0_0_20px_rgba(74,222,128,0.5)] disabled:opacity-50">
-          &gt; CONTACT.EXE
-        </button>
+      {/* Main Content - Centered buttons */}
+      <div className="relative flex items-center justify-center min-h-screen w-full px-4">
+        <AnimatedCursor isLoading={isLoading} initialPosition={cursorPosition} />
+
+        <div className="flex flex-col gap-4 w-full max-w-md">
+          <button
+            onClick={(e) => handleClick(e, 'Initialize')}
+            disabled={isLoading} 
+            className="px-12 py-4 bg-transparent text-green-400 border-2 border-green-400 font-mono uppercase tracking-wider hover:bg-green-400 hover:text-black transition-all hover:shadow-[0_0_20px_rgba(74,222,128,0.5)] disabled:opacity-50">
+            &gt; INITIALIZE
+          </button>
+          <button 
+            onClick={(e) => handleClick(e, 'Projects')}
+            disabled={isLoading}
+            className="px-12 py-4 bg-transparent text-green-400 border-2 border-green-400 font-mono uppercase tracking-wider hover:bg-green-400 hover:text-black transition-all hover:shadow-[0_0_20px_rgba(74,222,128,0.5)] disabled:opacity-50">
+            &gt; PROJECTS_
+          </button>
+          <button
+            onClick={(e) => handleClick(e, 'Contact')}
+            disabled={isLoading} 
+            className="px-12 py-4 bg-transparent text-green-400 border-2 border-green-400 font-mono uppercase tracking-wider hover:bg-green-400 hover:text-black transition-all hover:shadow-[0_0_20px_rgba(74,222,128,0.5)] disabled:opacity-50">
+            &gt; CONTACT.EXE
+          </button>
+        </div>
       </div>
     </div>
   )
