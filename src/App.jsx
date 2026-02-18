@@ -1,5 +1,6 @@
 import { useScrambleTitle } from './hooks/useScrambleTitle';
 import { AnimatedCursor } from './components/AnimatedCursor';
+import { BouncingLogo } from './components/BouncingLogo';
 import { useState, useEffect } from 'react';
 
 function App() {
@@ -11,11 +12,9 @@ function App() {
     loopDelay: 3000
   });
 
-  /*Handles the loading states*/
   const [isLoading, setIsLoading] = useState(false);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
-  // Force cursor to load via JavaScript
   useEffect(() => {
     const style = document.createElement('style');
     style.id = 'custom-cursor-override';
@@ -42,13 +41,10 @@ function App() {
   }, []);
 
   const handleClick = async (e, buttonName) => {
-    // Capture click position
     setCursorPosition({ x: e.clientX, y: e.clientY });
-    
     setIsLoading(true);
     await new Promise(resolve => setTimeout(resolve, 2000));
     setIsLoading(false);
-    
     console.log(`${buttonName} clicked`);
   };
 
@@ -87,10 +83,24 @@ function App() {
         />
       </div>
 
-      {/* Main Content - Centered buttons */}
-      <div className="relative flex items-center justify-center min-h-screen w-full px-4">
+      {/* Main Content */}
+      <div className="relative flex flex-col items-center justify-center min-h-screen w-full px-4 gap-16">
         <AnimatedCursor isLoading={isLoading} initialPosition={cursorPosition} />
 
+        {/* Title SVG - inverts whatever colour is behind it */}
+        <img
+          src="/luniic.svg"
+          alt="luniic"
+          style={{
+            mixBlendMode: 'difference',
+            filter: 'invert(1)',
+            width: 'clamp(280px, 60vw, 800px)',
+            userSelect: 'none',
+            pointerEvents: 'none',
+          }}
+        />
+
+      
         <div className="flex flex-col gap-4 w-full max-w-md">
           <button
             onClick={(e) => handleClick(e, 'Initialize')}
@@ -112,6 +122,7 @@ function App() {
           </button>
         </div>
       </div>
+      <BouncingLogo />
     </div>
   )
 }
