@@ -40,12 +40,12 @@ function App() {
     };
   }, []);
 
-  const handleClick = async (e, buttonName) => {
+  const handleNavClick = async (e, linkName) => {
     setCursorPosition({ x: e.clientX, y: e.clientY });
     setIsLoading(true);
     await new Promise(resolve => setTimeout(resolve, 2000));
     setIsLoading(false);
-    console.log(`${buttonName} clicked`);
+    console.log(`${linkName} clicked`);
   };
 
   return (
@@ -63,6 +63,36 @@ function App() {
           `
         }}
       />
+
+      {/* Full-width Glassmorphism Header */}
+      <header
+        className="absolute top-0 left-0 right-0 z-50 flex items-end justify-end px-10 py-4"
+        style={{
+          background: 'rgba(255,255,255,0.05)',
+          borderBottom: '1px solid rgba(255,255,255,0.08)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+        }}
+      >
+        {/* Right: nav links */}
+        <nav className="flex items-center gap-8 flex">
+          {[
+            { label: '<ABOUT>',    key: 'ABOUT' },
+            { label: 'PROJECTS_', key: 'PROJECTS' },
+            { label: '[REDACTED]',  key: 'REDACTED'},
+          ].map(({ label, key }) => (
+            <button
+              key={key}
+              onClick={(e) => handleNavClick(e, key)}
+              disabled={isLoading}
+              className="bg-transparent border-none font-mono text-sm uppercase tracking-widest disabled:opacity-50 transition-opacity hover:opacity-60"
+              style={{ mixBlendMode: 'difference', filter: 'invert(1)', color: 'white' }}
+            >
+              {label}
+            </button>
+          ))}
+        </nav>
+      </header>
       
       {/* Dog Image - Fixed to bottom left corner, 80% height */}
       <div 
@@ -99,29 +129,8 @@ function App() {
             pointerEvents: 'none',
           }}
         />
-
-      
-        <div className="flex flex-col gap-4 w-full max-w-md">
-          <button
-            onClick={(e) => handleClick(e, 'Initialize')}
-            disabled={isLoading} 
-            className="px-12 py-4 bg-transparent text-green-400 border-2 border-green-400 font-mono uppercase tracking-wider hover:bg-green-400 hover:text-black transition-all hover:shadow-[0_0_20px_rgba(74,222,128,0.5)] disabled:opacity-50">
-            &gt; INITIALIZE
-          </button>
-          <button 
-            onClick={(e) => handleClick(e, 'Projects')}
-            disabled={isLoading}
-            className="px-12 py-4 bg-transparent text-green-400 border-2 border-green-400 font-mono uppercase tracking-wider hover:bg-green-400 hover:text-black transition-all hover:shadow-[0_0_20px_rgba(74,222,128,0.5)] disabled:opacity-50">
-            &gt; PROJECTS_
-          </button>
-          <button
-            onClick={(e) => handleClick(e, 'Contact')}
-            disabled={isLoading} 
-            className="px-12 py-4 bg-transparent text-green-400 border-2 border-green-400 font-mono uppercase tracking-wider hover:bg-green-400 hover:text-black transition-all hover:shadow-[0_0_20px_rgba(74,222,128,0.5)] disabled:opacity-50">
-            &gt; CONTACT.EXE
-          </button>
-        </div>
       </div>
+
       <BouncingLogo />
     </div>
   )
